@@ -5,7 +5,17 @@ import axios from 'axios';
 import {ACCESS_TOKEN, BaseUrl, ImageUrl} from './src/helpers/apiAccessToken';
 import Feather from 'react-native-vector-icons/Feather';
 
+import Config from 'react-native-config-encrypted';
+import ConfigProvider from 'react-native-config';
+
+// Configure your library to use the seed key
+Config.configure({
+  key: '^NALA_GENETICS',
+  provider: ConfigProvider,
+});
 export default function App() {
+  const SECRET = Config.get('BASE_URL', true);
+  console.log(SECRET, 'secret');
   const [listMovieData, setListMovieData] = useState({});
   const [listNumber, setListNumber] = useState([]);
   const [startData, setStartData] = useState(1);
@@ -25,7 +35,7 @@ export default function App() {
       const results = await axios.get(`${BaseUrl}/movie/popular?page=${page}`, {
         headers: {Authorization: `Bearer ${ACCESS_TOKEN}`},
       });
-      console.log(results);
+
       setListMovieData(results.data);
     } catch (error) {
       console.log(error);
@@ -124,15 +134,15 @@ export default function App() {
 
   return (
     <View flex={1}>
-      <Text>List Movie</Text>
+      <Text>List Movie {SECRET} </Text>
 
       <View>
         <TouchableOpacity>
-          <Text>Popular</Text>
+          <Text>Popular </Text>
         </TouchableOpacity>
 
         <TouchableOpacity>
-          <Text>Top Rated</Text>
+          <Text>Top Rated </Text>
         </TouchableOpacity>
 
         <TouchableOpacity>

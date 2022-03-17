@@ -4,15 +4,24 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "android:dev": "ENVFILE=.env.dev react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
+    "start": "react-native start --reset-cache",
+    "start:staging": "react-native start --reset-cache",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "release": "cd android && ./gradlew clean && ./gradlew cleanBuildCache && ./gradlew assembleRelease && cd ..",
+    "decompile": "cd android/app/build/outputs/apk/release && apktool d app-release.apk",
+    "clean": "cd android && ./gradlew clean && ./gradlew cleanBuildCache && cd .."
   },
   "dependencies": {
     "axios": "^0.26.1",
+    "ini": "^2.0.0",
     "react": "17.0.2",
     "react-native": "0.67.3",
+    "react-native-config": "^1.4.5",
+    "react-native-config-encrypted": "^1.0.2",
+    "react-native-dotenv": "^3.3.1",
     "react-native-vector-icons": "^9.1.0"
   },
   "devDependencies": {
@@ -20,6 +29,7 @@
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
     "babel-jest": "^26.6.3",
+    "cross-env": "^7.0.3",
     "eslint": "7.14.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.66.2",
